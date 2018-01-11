@@ -1,0 +1,26 @@
+{
+  // Note: babel-preset-env does not include stage-x plugins/presets, so we must include where needed
+  "plugins": [
+    ["transform-class-properties"],
+    ["transform-runtime", { "polyfill": false }]
+  ],
+  "presets": [
+    "stage-2",
+    // Babel preset that automatically determines the Babel plugins you need based on your supported environments. Uses compat-table
+    // https://babeljs.io/docs/plugins/preset-env/
+    [
+      "env",
+      {
+        "targets": {
+          // http://browserl.ist/
+          "browsers": [
+            ">1%",
+            "last 2 versions",
+            "Firefox ESR"
+          ]
+        }
+      }
+    ],
+    "react"
+  ]
+}
