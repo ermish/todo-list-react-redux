@@ -90,13 +90,13 @@
     // 'prefer-spread': 2,
     // 'prefer-template': 2,
     // 'quote-props': [2, 'as-needed'],
-    // 'quotes': [2, 'single', 'avoid-escape'],
+    "quotes": [2, "single", "avoid-escape"],
     // 'semi-spacing': [2, {'before': false, 'after': true}],
     // 'space-before-blocks': 2,
     // 'space-before-function-paren': [2, 'never'],
     // 'space-in-parens': 2,
     // 'space-infix-ops': 2,
-    // //'semi': [2, 'never'],
+    "semi": [2, "never"],
 
     // // Strict Move
     // 'strict': 0,

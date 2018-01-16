@@ -2,10 +2,10 @@
   "extends": "stylelint-config-standard",
   "plugins": ["stylelint-order"],
   "rules": {
-    "indentation": 4,
+    "indentation": 2,
     "comment-empty-line-before": null,
     "color-hex-length": "short",
-    "max-nesting-depth": 3,
+    "max-nesting-depth": 4,
     "no-eol-whitespace": [
       true,
       {
@@ -14,6 +14,7 @@
     ],
     "order/properties-alphabetical-order": true,
     "selector-list-comma-newline-after": "always-multi-line",
-    "string-quotes": "single"
+    "string-quotes": "single",
+    "shorthand-property-no-redundant-values": null
   }
 }

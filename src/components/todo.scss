@@ -1,104 +1,102 @@
-@import "../sass/_checkbox.scss";
+@import '../sass/_checkbox.scss';
 
-h1, h2 {
+h1,
+h2 {
   font-weight: normal;
 }
 
-.todo{
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto; 
+.todo {
   align-items: stretch;
-  
-  padding: 10px 15px;
-  background-color: #ffffff;
-  box-shadow: 0 0 3px #dfdfdf;
+  background-color: #fff;
   border-radius: 4px;
+  box-shadow: 0 0 3px #dfdfdf;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  padding: 10px 15px;
 
-  &.iscollapsed{
-    .todo-details{
-      padding: 0 18px;
-      max-height: 0;
+  &.iscollapsed {
+    .todo-details {
       margin: 0;
-      transform: translate3d(0,0,0); /* trigger HW acceleration */
-      transition: max-height 0.3s ease-in-out, padding .3s ease-in-out .2s, margin .3s ease-in-out .2s;
+      max-height: 0;
+      padding: 0 18px;
+      transform: translate3d(0, 0, 0); /* trigger HW acceleration */
+      transition: max-height 0.3s ease-in-out;
+      transition: padding 0.3s ease-in-out 0.2s;
+      transition: margin 0.3s ease-in-out 0.2s;
     }
   }
 
-
-  .todo-header{
+  .todo-header {
+    align-items: center;
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    
-    line-height: 40px;
     height: 40px;
+    justify-content: flex-start;
+    line-height: 40px;
 
-    .todo-checkbox{
-        @extend .check-box;
-        margin: 0 15px 0 0;
-        line-height: 40px;
+    .todo-checkbox {
+      @extend .check-box;
+
+      line-height: 40px;
+      margin: 0 15px 0 0;
     }
 
-    .todo-title{
-        min-width: 25px;
-        height: 40px;
+    .todo-title {
+      height: 40px;
+      min-width: 25px;
 
-        .title-fixed{
-          font-weight: 400;
-          font-size: 25px;
-          line-height: 40px;
-          margin: 0;
+      .title-fixed {
+        font-size: 25px;
+        font-weight: 400;
+        line-height: 40px;
+        margin: 0;
+      }
+
+      .title-editable {
+        border: none;
+        border-color: transparent;
+        font-family: 'Avenir', Helvetica, Arial, sans-serif;
+        font-size: 25px;
+        font-weight: 400;
+        line-height: 40px;
+        margin: 0;
+        padding: 0;
+
+        &:focus {
+          outline: none;
         }
 
-        .title-editable{
-          font-weight: 400;
-          font-size: 25px;
-          line-height: 40px;
-          margin: 0;
-          padding: 0;
-
-          border: none;
-          border-color: transparent;
-          font-family: 'Avenir', Helvetica, Arial, sans-serif;
-
-          &:focus{
-            outline: none;
-          }
-
-          &::placeholder { /* Most modern browsers support this now. */
-            color: rgb(236, 236, 236);
-          }
+        &::placeholder {
+          /* Most modern browsers support this now. */
+          color: rgb(236, 236, 236);
         }
+      }
     }
   }
 
-
-  .todo-details{
-    display: flex;
-    flex-direction: column;
-    flex: 1 1 auto;
+  .todo-details {
     align-self: stretch;
-
-    max-height: 1000px;
-    transform: translate3d(0,0,0); /* trigger HW acceleration */    
-    transition:max-height 0.3s ease-in-out;
-
-    overflow: hidden;
-    padding: 18px 18px;
     background-color: #fafafa;
     border-radius: 8px;
-    margin: 12px 0 2px 0;    
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    margin: 12px 0 2px 0;
+    max-height: 1000px;
+    overflow: hidden;
+    padding: 18px 18px;
+    transform: translate3d(0, 0, 0); /* trigger HW acceleration */
+    transition: max-height 0.3s ease-in-out;
 
-    .todo-notes{
+    .todo-notes {
+      align-self: flex-start;
       flex: 1 1 auto;
-      align-self: flex-start;    
     }
 
-    .todo-subtasks{
+    .todo-subtasks {
+      align-self: flex-start;
       flex: 1 1 auto;
-      align-self: flex-start;  
 
       ol {
         padding-left: 18px;
