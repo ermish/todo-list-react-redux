@@ -14,7 +14,7 @@ module.exports = {
   appPublic: resolveApp('public'),
   appRoot: resolveApp(''),
   appSrc: resolveApp('src'),
-  configESLint: resolveApp('config/eslint.config.js'),
+  configESLint: resolveApp('.eslintrc'),
   configPostCSS: resolveApp('config/postcss.config.js'),
-  configStyleLint: resolveApp('config/stylelint.config.js')
+  configStyleLint: resolveApp('.stylelintrc')
 };

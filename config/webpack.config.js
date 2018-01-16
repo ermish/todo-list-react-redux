@@ -1,7 +1,7 @@
 'use strict';
 
 const path = require('path');
-const fs = require('fs');
+// const fs = require('fs');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const paths = require('./paths');
@@ -23,20 +23,19 @@ const commonConfig = {
     path: paths.appBuild,
     publicPath: '/'
   },
-  watch: true,
   module: {
     rules: [
       // First, run the linter.
       // It's important to do this before Babel processes the JS.
-      // {
-      //   test: /\.(js|jsx)$/,
-      //   enforce: 'pre',
-      //   exclude: /node_modules/,
-      //   loader: 'eslint-loader',
-      //   options: {
-      //     configFile: paths.configESLint
-      //   }
-      // },
+      {
+        test: /\.(js|jsx)$/,
+        enforce: 'pre',
+        exclude: /node_modules/,
+        loader: 'eslint-loader',
+        options: {
+          configFile: paths.configESLint
+        }
+      },
       // "url" loader works like "file" loader except that it embeds assets
       // smaller than specified limit in bytes as data URLs to avoid requests.
       // A missing `test` is equivalent to a match.
@@ -59,10 +58,10 @@ const commonConfig = {
   },
   plugins: [
     new CleanWebpackPlugin([paths.appBuild], { root: paths.appRoot }),
-    // new StyleLintPlugin({
-    //   configFile: paths.configStyleLint,
-    //   context: paths.appSrc
-    // }),
+    new StyleLintPlugin({
+      configFile: paths.configStyleLint,
+      context: paths.appSrc
+    }),
     new webpack.DefinePlugin({
       API_URL: JSON.stringify(process.env.API_URL)
     }),

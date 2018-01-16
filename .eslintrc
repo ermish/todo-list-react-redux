@@ -1,55 +1,62 @@
-module.exports = {
-  env: {
-    'browser': true,
-    'es6': true,
-    'node': true
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
   },
-  extends: [
+  "extends": [
     // http://eslint.org/docs/rules/
-    'eslint:recommended',
+    "eslint:recommended",
     // https://github.com/yannickcr/eslint-plugin-react
-    'plugin:react/recommended'
+    "plugin:react/recommended",
+    "plugin:flowtype/recommended"
   ],
-  globals: {
-    API_URL: true
+  "globals": {
+    "API_URL": true
   },
-  parser: 'babel-eslint',
-  parserOptions: {
-    ecmaFeatures: {
-      'ecmaVersion': 7,
-      'experimentalObjectRestSpread': true,
-      'jsx': true
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "ecmaVersion": 8,
+      "experimentalObjectRestSpread": true,
+      "jsx": true,
+      "spread": true
     },
-    sourceType: 'module'
+    "sourceType": "module"
   },
-  plugins: [
+  "plugins": [
     // https://github.com/yannickcr/eslint-plugin-react
-    'react',
+    "react",
     // https://github.com/benmosher/eslint-plugin-import
-    'import',
+    "import",
     // https://github.com/evcohen/eslint-plugin-jsx-a11y
-    'jsx-a11y'
+    "jsx-a11y",
+    // https://github.com/gajus/eslint-plugin-flowtype
+    "flowtype"
   ],
   // 'off' or 0 - turn the rule off
   // 'warn' or 1 - turn the rule on as a warning (doesn’t affect exit code)
   // 'error' or 2 - turn the rule on as an error (exit code will be 1)
-  rules: {
+  "rules": {
     // Best Practices
-    'block-scoped-var': 2,
-    'complexity': [2, {'max': 10}],
-    'consistent-return': 2,
-    'curly': 2,
-    'dot-location': [2, 'property'],
-    'dot-notation': [2, {'allowPattern': '^[a-z]+(_[a-z]+)+$'}],
-    'eqeqeq': 2,
-    'no-alert': 2,
-    'no-multi-spaces': 2,
-    'no-param-reassign': [2, {'props': true}],
-    'no-redeclare': 2,
-    'no-unused-expressions': [2, {'allowShortCircuit': true, 'allowTernary': true}],
-    'vars-on-top': 2,
-    'yoda': [2, 'never', {'exceptRange': true}],
-    'no-console': 1, //For debugging, but throw warnings so logs are not commited.
+    "block-scoped-var": 2,
+    "complexity": [2, { "max": 10 }],
+    "consistent-return": 2,
+    "curly": 2,
+    "dot-location": [2, "property"],
+    "dot-notation": [2, { "allowPattern": "^[a-z]+(_[a-z]+)+$" }],
+    "eqeqeq": 2,
+    "no-alert": 2,
+    "no-multi-spaces": 2,
+    "no-param-reassign": [2, { "props": true }],
+    "no-redeclare": 2,
+    "no-unused-expressions": [
+      2,
+      { "allowShortCircuit": true, "allowTernary": true }
+    ],
+    "vars-on-top": 2,
+    "yoda": [2, "never", { "exceptRange": true }],
+    "no-console": 1, //For debugging, but throw warnings so logs are not commited.
 
     // // Stylistic Issues
     // 'arrow-body-style': 2,
@@ -101,9 +108,10 @@ module.exports = {
     // 'react/no-did-mount-set-state': 2,
     // 'react/no-did-update-set-state': 2,
     // 'react/no-multi-comp': 2,
-     'react/prefer-es6-class': 2,
-     'react/prefer-stateless-function': 2,
-     'react/self-closing-comp': 2,
+    "react/prefer-es6-class": 2,
+    "react/prefer-stateless-function": 2,
+    "react/self-closing-comp": 2,
+    "react/prop-types": 0
     // 'react/sort-comp': 2,
     // 'react/sort-prop-types': 2,
 
@@ -125,8 +133,11 @@ module.exports = {
     // 'jsx-a11y/alt-text': 2,
     // 'jsx-a11y/img-redundant-alt': 2
   },
-  settings: {
+  "settings": {
     // https://github.com/benmosher/eslint-plugin-import/tree/master/resolvers/webpack
-    'import/resolver': 'webpack'
+    "import/resolver": "webpack",
+    // "flowtype": {
+    //   "onlyFilesWithFlowAnnotation": true
+    // }
   }
-};
+}

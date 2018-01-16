@@ -1,7 +1,8 @@
 {
   // Note: babel-preset-env does not include stage-x plugins/presets, so we must include where needed
   "plugins": [
-    ["transform-class-properties"],
+    "transform-class-properties",
+    "transform-object-rest-spread",
     ["transform-runtime", { "polyfill": false }]
   ],
   "presets": [
@@ -21,6 +22,7 @@
         }
       }
     ],
-    "react"
+    "react",
+    "flow"
   ]
 }

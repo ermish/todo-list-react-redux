@@ -51,11 +51,11 @@ module.exports = {
       chunks: ['main'],
       template: paths.appHtml
     }),
-    new HtmlWebpackPlugin({
-      chunks: ['cssguide'],
-      filename: 'cssguide.html',
-      template: paths.appHtml
-    }),
+    // new HtmlWebpackPlugin({
+    //   chunks: ['cssguide'],
+    //   filename: 'cssguide.html',
+    //   template: paths.appHtml
+    // }),
     // Enable HMR
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
