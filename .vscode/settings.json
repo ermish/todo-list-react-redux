@@ -1,12 +1,13 @@
 {
   // Format a file on save. A formatter must be available, the file must not be auto-saved, and editor must not be shutting down.
   "editor.formatOnSave": false,
-  "eslint.enable": true,
   // Enable/disable default JavaScript formatter (For Prettier)
-  "javascript.validate.enable": false,
   // Use 'prettier-eslint' instead of 'prettier'. Other settings will only be fallbacks in case they could not be inferred from eslint rules.
   "prettier.eslintIntegration": true,
   "prettier.stylelintIntegration": true,
+  "javascript.format.enable": false,
+  "javascript.validate.enable": false,
+  "eslint.enable": true,
   "stylelint.enable": true,
   "css.validate": false,
   "scss.validate": false,

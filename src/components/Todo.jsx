@@ -1,130 +1,124 @@
-// @flow
-
 import React from 'react'
 import classNames from 'classnames'
 
 import './todo.scss'
 
-class Todo extends React.Component<Props> {
-  constructor(props) {
-    super(props)
-
-    const { title, notes } = this.props
-    this.state = {
-      title_: title,
-      notes_: notes,
-      boxId: 'box' + Math.ceil(Math.random() * 10000),
-      isCollapsed: true,
-      isCompleted: false,
-      inTitleEditMode: false,
-      subtasks: [
-        { id: 1, text: 'lol' },
-        { id: 2, text: 'lawl' },
-        { id: 3, text: 'teehee' }
-      ],
-      doubleClick: {
-        delay: 300,
-        clicks: 0,
-        timer: null
-      }
-    }
-
-    this.expand = this.expand.bind(this)
-    this.collapse = this.collapse.bind(this)
-    this.onTodoCompleted = this.onTodoCompleted.bind(this)
-    this.onTitleClick = this.onTitleClick.bind(this)
-    this.onTodoClick = this.onTodoClick.bind(this)
+class Todo extends React.Component {
+  state = {
+    title_: this.props.title,
+    notes_: this.props.notes,
+    boxId: 'box' + Math.ceil(Math.random() * 10000),
+    isCollapsed: true,
+    isCompleted: false,
+    inTitleEditMode: false,
+    subtasks: [
+      { id: 1, text: 'lol' },
+      { id: 2, text: 'lawl' },
+      { id: 3, text: 'teehee' }
+    ]
   }
 
-  expand() {
+  expand = () => {
     this.setState({ isCollapsed: false })
+    this.titleinput.focus()
   }
-  collapse() {
+  collapse = () => {
     this.setState({ isCollapsed: true })
   }
-  onTodoCompleted() {
-    this.setState({ isCompleted: !this.isCompleted })
+  onTodoCompleted = () => {
+    this.setState(prevState => ({ isCompleted: !prevState.isCompleted }))
 
-    if (this.isCompleted) {
-      //this.$emit('completed')
+    if (this.state.isCompleted) {
+      this.props.onCompleted()
     }
   }
-  onTitleClick(event) {
+  onTitleClick = e => {
     this.expand()
-    event.stopPropagation()
+    e.stopPropagation()
   }
-  onTodoClick(event) {
-    var self = this
+  onTodoClick = e => {
+    this.doubleClick = {
+      delay: 300,
+      clicks: 0,
+      timer: null
+    }
 
-    if (self.isCompleted) {
+    if (this.state.isCompleted) {
       return
     }
 
-    if (!self.isCollapsed) {
-      event.stopPropagation()
+    if (!this.state.isCollapsed) {
+      e.stopPropagation()
     }
 
-    self.setState(prevState => ({ doubleClick: prevState.doubleClick + 1 }))
+    this.setState(prevState => ({ doubleClick: prevState.doubleClick + 1 }))
 
+    var self = this
     if (self.doubleClick.clicks === 1) {
-      //     self.setState((prevState) => {
-      //       doubleClick: { ...prevState.doubleClick,
-      //       timer : setTimeout(function () {
-      //         self.setState({ doubleClick: { ...prevStatedoubleClick, clicks: 0 } })
-      //       }, self.doubleClick.delay)
-      //            }
-      // })
-
       self.doubleClick.timer = setTimeout(function() {
         self.doubleClick.clicks = 0
       }, self.doubleClick.delay)
     } else {
       clearTimeout(self.doubleClick.timer)
       self.doubleClick.clicks = 0
-      self.isCollapsed ? self.expand() : self.collapse()
+      self.state.isCollapsed ? self.expand() : self.collapse()
       event.stopPropagation()
     }
   }
+  onTitleInputChanged = e => {
+    this.setState({ title_: e.target.value })
+  }
 
   render() {
+    const {
+      isCollapsed,
+      isCompleted,
+      boxId,
+      title_,
+      notes_,
+      subtasks
+    } = this.state
+
+    const {
+      onTodoClick,
+      onTodoCompleted,
+      onTitleClick,
+      onTitleInputChanged
+    } = this
+
     return (
       <div
-        className={classNames('todo-list', {
-          iscollapsed: this.state.isCollapsed
-        })}
-        onClick={this.state.onTodoClick}
+        className={classNames('todo', { iscollapsed: isCollapsed })}
+        onClick={onTodoClick}
       >
         <div className="todo-header">
-          <input
-            type="checkbox"
-            id={this.state.boxId}
-            checked={this.state.isCompleted}
-          />
+          <input type="checkbox" id={boxId} checked={isCompleted} />
           <label
-            htmlFor={this.state.boxId}
+            htmlFor={boxId}
             className="todo-checkbox"
-            onClick={this.state.onTodoCompleted}
+            onClick={onTodoCompleted}
           />
-          <div className="todo-title" onClick={this.state.onTitleClick}>
-            {this.state.isCollapsed ? (
-              <h1 className="title-fixed">{this.state.title_}</h1>
+          <div className="todo-title" onClick={onTitleClick}>
+            {isCollapsed ? (
+              <h1 className="title-fixed">{title_}</h1>
             ) : (
               <input
                 className="title-editable"
                 placeholder="drink some water..."
                 ref={input => {
-                  this.titleInput = input
+                  this.titleinput = input
                 }}
-                value={this.state.title_}
+                value={title_}
+                onChange={onTitleInputChanged}
               />
             )}
           </div>
         </div>
         <div className="todo-details">
-          <div className="todo-notes">{this.state.notes_}</div>
+          <div className="todo-notes">{notes_}</div>
           <div className="todo-subtasks">
             <ol>
-              {this.state.subtasks.map(subtask => {
+              {subtasks.map(subtask => {
                 return <li key={subtask.id}>{subtask.text}</li>
               })}
             </ol>

@@ -54,7 +54,7 @@
       2,
       { "allowShortCircuit": true, "allowTernary": true }
     ],
-    "vars-on-top": 2,
+    "vars-on-top": 0,
     "yoda": [2, "never", { "exceptRange": true }],
     "no-console": 1, //For debugging, but throw warnings so logs are not commited.
 
@@ -136,8 +136,8 @@
   "settings": {
     // https://github.com/benmosher/eslint-plugin-import/tree/master/resolvers/webpack
     "import/resolver": "webpack",
-    // "flowtype": {
-    //   "onlyFilesWithFlowAnnotation": true
-    // }
+    "flowtype": {
+      "onlyFilesWithFlowAnnotation": false
+    }
   }
 }

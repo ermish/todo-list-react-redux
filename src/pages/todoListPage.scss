@@ -11,9 +11,11 @@
   }
 
   .app-logo {
+    align-self: center;
     grid-column: 2 /2;
     grid-row: 1 / 1;
     height: 300px;
+    justify-self: center;
     width: 300px;
   }
 
