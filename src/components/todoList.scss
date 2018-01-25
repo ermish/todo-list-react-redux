@@ -42,20 +42,24 @@
       }
     }
   }
+}
 
-  .todo-list-animation-item {
-    display: inline-block;
-    margin-right: 10px;
+.todo-list-animation {
+  .fade-enter {
+    opacity: 0.01;
   }
 
-  .todo-list-animation-enter-active,
-  .todo-list-animation-leave-active {
-    transition: all 0.6s;
+  .fade-enter.fade-enter-active {
+    opacity: 1;
+    transition: opacity 400ms ease-in;
   }
 
-  .todo-list-animation-enter,
-  .todo-list-animation-leave-to {
-    opacity: 0;
-    transform: translateX(30px);
+  .fade-exit {
+    opacity: 1;
+  }
+
+  .fade-exit.fade-exit-active {
+    opacity: 0.01;
+    transition: opacity 300ms ease-in;
   }
 }

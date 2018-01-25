@@ -1,6 +1,6 @@
 {
   "extends": "stylelint-config-standard",
-  "plugins": ["stylelint-order"],
+  "plugins": ["stylelint-order", "stylelint-scss"],
   "rules": {
     "indentation": 2,
     "comment-empty-line-before": null,
@@ -15,6 +15,10 @@
     "order/properties-alphabetical-order": true,
     "selector-list-comma-newline-after": "always-multi-line",
     "string-quotes": "single",
-    "shorthand-property-no-redundant-values": null
+    "shorthand-property-no-redundant-values": null,
+    "at-rule-no-unknown": null,
+    "no-descending-specificity": null,
+    "value-list-comma-newline-after": "always-multi-line",
+    "max-line-length": 100
   }
 }

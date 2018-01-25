@@ -1,48 +1,54 @@
 import React from 'react'
 import classNames from 'classnames'
+import { focusAtEnd } from '~/utils/reactUtils'
 
 import './todo.scss'
 
 class Todo extends React.Component {
-  state = {
-    title_: this.props.title,
-    notes_: this.props.notes,
-    boxId: 'box' + Math.ceil(Math.random() * 10000),
-    isCollapsed: true,
-    isCompleted: false,
-    inTitleEditMode: false,
-    subtasks: [
-      { id: 1, text: 'lol' },
-      { id: 2, text: 'lawl' },
-      { id: 3, text: 'teehee' }
-    ]
+  // state = {
+  //   title_: this.props.title,
+  //   notes_: this.props.notes,
+  //   isCollapsed: this.props.isCollapsed,
+  //   isCompleted: false,
+  //   subtasks: [
+  //     { id: 1, text: 'lol' },
+  //     { id: 2, text: 'lawl' },
+  //     { id: 3, text: 'teehee' }
+  //   ]
+  // }
+
+  componentDidMount = () => {
+    this.doubleClick = {
+      delay: 300,
+      clicks: 0,
+      timer: null
+    }
+  }
+
+  componentDidUpdate = () => {
+    if (!this.state.isCollapsed) {
+      focusAtEnd(this.titleinput)
+    }
   }
 
   expand = () => {
     this.setState({ isCollapsed: false })
-    this.titleinput.focus()
   }
   collapse = () => {
     this.setState({ isCollapsed: true })
   }
   onTodoCompleted = () => {
-    this.setState(prevState => ({ isCompleted: !prevState.isCompleted }))
-
-    if (this.state.isCompleted) {
+    if (!this.state.isCompleted) {
       this.props.onCompleted()
     }
+
+    // this.setState(prevState => ({ isCompleted: !prevState.isCompleted }))
   }
   onTitleClick = e => {
     this.expand()
     e.stopPropagation()
   }
   onTodoClick = e => {
-    this.doubleClick = {
-      delay: 300,
-      clicks: 0,
-      timer: null
-    }
-
     if (this.state.isCompleted) {
       return
     }
@@ -51,7 +57,7 @@ class Todo extends React.Component {
       e.stopPropagation()
     }
 
-    this.setState(prevState => ({ doubleClick: prevState.doubleClick + 1 }))
+    this.doubleClick.clicks++
 
     var self = this
     if (self.doubleClick.clicks === 1) {
@@ -59,10 +65,10 @@ class Todo extends React.Component {
         self.doubleClick.clicks = 0
       }, self.doubleClick.delay)
     } else {
+      e.stopPropagation()
       clearTimeout(self.doubleClick.timer)
       self.doubleClick.clicks = 0
       self.state.isCollapsed ? self.expand() : self.collapse()
-      event.stopPropagation()
     }
   }
   onTitleInputChanged = e => {
@@ -70,14 +76,9 @@ class Todo extends React.Component {
   }
 
   render() {
-    const {
-      isCollapsed,
-      isCompleted,
-      boxId,
-      title_,
-      notes_,
-      subtasks
-    } = this.state
+    const { isCollapsed, isCompleted, title_, notes_, subtasks } = this.state
+
+    const { isCollapsed, isCompleted, title, notes, subtasks } = this.props
 
     const {
       onTodoClick,
@@ -86,27 +87,29 @@ class Todo extends React.Component {
       onTitleInputChanged
     } = this
 
+    const checkboxId = 'box' + Math.ceil(Math.random() * 10000)
+
     return (
       <div
         className={classNames('todo', { iscollapsed: isCollapsed })}
         onClick={onTodoClick}
       >
-        <div className="todo-header">
-          <input type="checkbox" id={boxId} checked={isCompleted} />
+        <div className='todo-header'>
+          <input type='checkbox' id={checkboxId} checked={isCompleted} />
           <label
-            htmlFor={boxId}
-            className="todo-checkbox"
+            htmlFor={checkboxId}
+            className='todo-checkbox'
             onClick={onTodoCompleted}
           />
-          <div className="todo-title" onClick={onTitleClick}>
+          <div className='todo-title' onClick={onTitleClick}>
             {isCollapsed ? (
-              <h1 className="title-fixed">{title_}</h1>
+              <h1 className='title-fixed'>{title_}</h1>
             ) : (
               <input
-                className="title-editable"
-                placeholder="drink some water..."
-                ref={input => {
-                  this.titleinput = input
+                className='title-editable'
+                placeholder='drink some water...'
+                ref={ref => {
+                  this.titleinput = ref
                 }}
                 value={title_}
                 onChange={onTitleInputChanged}
@@ -114,9 +117,9 @@ class Todo extends React.Component {
             )}
           </div>
         </div>
-        <div className="todo-details">
-          <div className="todo-notes">{notes_}</div>
-          <div className="todo-subtasks">
+        <div className='todo-details'>
+          <div className='todo-notes'>{notes_}</div>
+          <div className='todo-subtasks'>
             <ol>
               {subtasks.map(subtask => {
                 return <li key={subtask.id}>{subtask.text}</li>
