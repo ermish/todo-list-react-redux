@@ -113,8 +113,8 @@ export default class TodoList extends React.Component {
   onTitleInputChanged = id => childEvent => {
     const newTitle = childEvent.target.value
 
-    this.setState(prevState =>
-      prevState.todos.map(todo => {
+    this.setState(prevState => ({
+      todos: prevState.todos.map(todo => {
         if (todo.id !== id) {
           return todo
         }
@@ -124,12 +124,12 @@ export default class TodoList extends React.Component {
           title: newTitle
         }
       })
-    )
+    }))
   }
 
   onTodoCompleted = id => () => {
-    this.setState(prevState => {
-      prevState.todos.map(todo => {
+    this.setState(prevState => ({
+      todos: prevState.todos.map(todo => {
         if (todo.id !== id) {
           return todo
         }
@@ -139,7 +139,7 @@ export default class TodoList extends React.Component {
           isCompleted: true
         }
       })
-    })
+    }))
 
     this.removeTodo(id)
   }
@@ -150,7 +150,7 @@ export default class TodoList extends React.Component {
 
   onAddTodo = e => {
     e.stopPropagation()
-    this.addTodo(e)
+    this.addTodo()
   }
 
   render = () => {
@@ -173,6 +173,7 @@ export default class TodoList extends React.Component {
           onTitleInputChanged={onTitleInputChanged(todo.id)}
           onTodoClick={onTodoClick(i)}
           onTodoCompleted={onTodoCompleted(todo.id)}
+          onEnterPressed={onAddTodo}
           isCollapsed={i !== activeTodoIndex} />
       </Fade>
     ))

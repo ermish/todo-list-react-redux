@@ -10,7 +10,15 @@ class Todo extends React.Component {
       focusAtEnd(this.titleinput)
     }
   }
-  
+
+  onKeyDown = e => {
+    if (e.key.toLowerCase() !== 'enter') {
+      return
+    }
+
+    this.props.onEnterPressed(e)
+  }
+
   render = () => {
     const {
       isCollapsed,
@@ -23,6 +31,8 @@ class Todo extends React.Component {
       onTitleClick,
       onTitleInputChanged
     } = this.props
+
+    const { onKeyDown } = this
 
     const checkboxId = `box${Math.ceil(Math.random() * 10000)}`
 
@@ -41,6 +51,7 @@ class Todo extends React.Component {
                 ref={ref => {
                   this.titleinput = ref
                 }}
+                onKeyDown={onKeyDown}
                 onChange={e => onTitleInputChanged(e)} />
             )}
           </div>

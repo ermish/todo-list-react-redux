@@ -43,6 +43,9 @@ h2 {
     }
 
     .todo-title {
+      align-self: flex-start;
+      display: flex;
+      flex: 1 1;
       height: 40px;
       min-width: 25px;
 
@@ -56,6 +59,8 @@ h2 {
       .title-editable {
         border: none;
         border-color: transparent;
+        display: flex;
+        flex: 1 1;
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
         font-size: 25px;
         font-weight: 400;
