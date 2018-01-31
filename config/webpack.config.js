@@ -1,18 +1,17 @@
-'use strict';
+'use strict'
 
-const path = require('path');
-// const fs = require('fs');
-const webpack = require('webpack');
-const merge = require('webpack-merge');
-const paths = require('./paths');
+const path = require('path')
+const webpack = require('webpack')
+const merge = require('webpack-merge')
+const paths = require('./paths')
 
 // Plugins
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const StyleLintPlugin = require('stylelint-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+const StyleLintPlugin = require('stylelint-webpack-plugin')
 
 // Env configs
-const devConfig = require('./webpack.dev.config');
-const prodConfig = require('./webpack.prod.config');
+const devConfig = require('./webpack.dev.config')
+const prodConfig = require('./webpack.prod.config')
 
 const commonConfig = {
   entry: {
@@ -44,8 +43,8 @@ const commonConfig = {
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: 'img/[name].[hash:8].[ext]',
-        },
+          name: 'img/[name].[hash:8].[ext]'
+        }
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
@@ -64,22 +63,23 @@ const commonConfig = {
     }),
     new webpack.DefinePlugin({
       API_URL: JSON.stringify(process.env.API_URL)
-    }),
+    })
   ],
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
-      '~': path.resolve('./src')
+      '~': path.resolve('./src'),
+      sass: path.resolve('./src/sass')
     }
-  },
-};
+  }
+}
 
 module.exports = () => {
-  console.log('NODE_ENV', process.env.NODE_ENV);
+  console.log('NODE_ENV', process.env.NODE_ENV)
 
   if (process.env.NODE_ENV === 'production') {
-    return merge(commonConfig, prodConfig);
+    return merge(commonConfig, prodConfig)
   }
 
-  return merge(commonConfig, devConfig);
-};
+  return merge(commonConfig, devConfig)
+}

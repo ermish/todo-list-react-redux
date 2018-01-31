@@ -1,17 +1,17 @@
-'use strict';
+'use strict'
 
-const path = require('path');
-const webpack = require('webpack');
-const paths = require('./paths');
+//const path = require('path')
+const webpack = require('webpack')
+const paths = require('./paths')
 
 // Plugins
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const ManifestPlugin = require('webpack-manifest-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const ManifestPlugin = require('webpack-manifest-plugin')
 
 // Load dotenv
 //https://github.com/motdotla/dotenv
-require('dotenv').config({ path: '/config/.env.prod' });
+require('dotenv').config({ path: '/config/.env.prod' })
 
 module.exports = {
   // Don't attempt to continue if there are any errors.
@@ -34,7 +34,7 @@ module.exports = {
         options: {
           // Do not include superfluous whitespace characters and line terminators
           // https://blog.mariusschulz.com/2016/07/12/speeding-up-babel-transpilation-with-compact-mode
-          compact: true,
+          compact: true
         }
       },
       {
@@ -44,7 +44,7 @@ module.exports = {
           use: [
             {
               loader: 'css-loader',
-              options: { importLoaders: 1 },
+              options: { importLoaders: 1 }
             },
             { loader: 'sass-loader' },
             { loader: 'postcss-loader', options: { config: { path: paths.configPostCSS } } }
@@ -66,8 +66,8 @@ module.exports = {
         keepClosingSlash: true,
         minifyJS: true,
         minifyCSS: true,
-        minifyURLs: true,
-      },
+        minifyURLs: true
+      }
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
@@ -84,7 +84,7 @@ module.exports = {
     // to their corresponding output file so that tools can pick it up without
     // having to parse `index.html`.
     new ManifestPlugin({
-      fileName: 'asset-manifest.json',
-    }),
+      fileName: 'asset-manifest.json'
+    })
   ]
-};
+}

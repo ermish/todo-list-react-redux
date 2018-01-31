@@ -16,29 +16,42 @@ export default class TodoList extends React.Component {
     todos: [
       {
         id: '8be4bdf2-692c-4aac-91a8-537bae7aff20',
-        text: 'lol',
-        notes: 'this is a note'
+        title: 'lol',
+        notes: 'this is a note',
+        subtasks: [
+          { id: '8be4bdf2-692c-4aac-91a8-537bae8aff21', title: 'do this' },
+          { id: '8be4bdf2-692c-4aac-91a8-537bae8aff22', title: 'then this' }
+        ]
       },
       {
         id: '3be4bdf2-692c-4aac-91a8-537bae7aff21',
-        text: 'lawl',
+        title: 'lawl',
         notes: 'this is a description'
       },
       {
         id: '4be4bdf2-692c-4aac-91a8-537bae7aff22',
-        text: 'teehee',
+        title: 'teehee',
         notes: 'this is some detailed stuff'
       }
     ],
     activeTodoIndex: null
   }
 
+  componentDidMount = () => {
+    this.doubleClick = {
+      delay: 300,
+      clicks: 0,
+      timer: null
+    }
+  }
+
   addTodo = () => {
     const newId = uuid()
+
     this.setState(prevState => {
-      var newTodo = {
+      const newTodo = {
         id: newId,
-        text: '',
+        title: '',
         notes: 'new todo notes'
       }
 
@@ -56,29 +69,76 @@ export default class TodoList extends React.Component {
     }))
   }
 
+  openTodo = id => {
+    this.setState(() => ({
+      activeTodoIndex: id
+    }))
+  }
+
   closeTodos = () => {
     this.setState(() => ({
       activeTodoIndex: null
     }))
   }
 
+  onTitleClick = index => e => {
+    this.setState(() => ({
+      activeTodoIndex: index
+    }))
+    e.stopPropagation()
+  }
+
+  onTodoClick = id => e => {
+    if (this.state.activeTodoIndex == id) {
+      e.stopPropagation()
+      return
+    }
+
+    this.doubleClick.clicks++
+
+    const self = this
+
+    if (self.doubleClick.clicks === 1) {
+      self.doubleClick.timer = setTimeout(() => {
+        self.doubleClick.clicks = 0
+      }, self.doubleClick.delay)
+    } else {
+      e.stopPropagation()
+      clearTimeout(self.doubleClick.timer)
+      self.doubleClick.clicks = 0
+      self.state.activeTodoIndex == null ? self.openTodo(id) : self.closeTodos()
+    }
+  }
+
+  onTitleInputChanged = id => childEvent => {
+    const newTitle = childEvent.target.value
+
+    this.setState(prevState =>
+      prevState.todos.map(todo => {
+        if (todo.id !== id) {
+          return todo
+        }
+
+        return {
+          ...todo,
+          title: newTitle
+        }
+      })
+    )
+  }
+
   onTodoCompleted = id => () => {
     this.setState(prevState => {
-      const todoToUpdateIndex = prevState.todos.findIndex(todo => {
-        todo.id === id
+      prevState.todos.map(todo => {
+        if (todo.id !== id) {
+          return todo
+        }
+
+        return {
+          ...todo,
+          isCompleted: true
+        }
       })
-
-      const todToUpdate = prevState.todos[todoToUpdateIndex]
-
-
-      ({
-          todos: [...prevState.todos, 
-            [todoToUpdateIndex] : prevState.todos[todoToUpdateIndex]
-          []
-
-      })
-
-      todoToUpdate({ isCompleted: !prevState.isCompleted })
     })
 
     this.removeTodo(id)
@@ -95,17 +155,25 @@ export default class TodoList extends React.Component {
 
   render = () => {
     const { todos, activeTodoIndex } = this.state
-    const { onTodoCompleted, onTodoListClicked, onAddTodo } = this
+    const {
+      onTodoCompleted,
+      onTodoListClicked,
+      onAddTodo,
+      onTitleClick,
+      onTitleInputChanged,
+      onTodoClick
+    } = this
 
-    var todoItems = todos.map((todo, i) => (
+    const todoItems = todos.map((todo, i) => (
       <Fade key={todo.id}>
-        <Todo
-          title={todo.text}
+        <Todo title={todo.title}
           notes={todo.notes}
-          onCompleted={onTodoCompleted(todo.id)}
-          // ref={element => (this.todoRefs[i] = element)}
-          isCollapsed={i !== activeTodoIndex}
-        />
+          subtasks={todo.subtasks}
+          onTitleClick={onTitleClick(i)}
+          onTitleInputChanged={onTitleInputChanged(todo.id)}
+          onTodoClick={onTodoClick(i)}
+          onTodoCompleted={onTodoCompleted(todo.id)}
+          isCollapsed={i !== activeTodoIndex} />
       </Fade>
     ))
 
@@ -115,11 +183,7 @@ export default class TodoList extends React.Component {
           {todoItems}
         </TransitionGroup>
         <div className='add-todo-container'>
-          <a
-            className='add-todo-button'
-            href='javascript:void(0)'
-            onClick={onAddTodo}
-          >
+          <a className='add-todo-button' href='javascript:void(0)' onClick={onAddTodo}>
             <span className='add-todo-icon'>+</span> Add todo
           </a>
         </div>

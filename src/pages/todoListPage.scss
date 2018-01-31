@@ -1,4 +1,4 @@
-@import '../sass/_variables.scss';
+@import '~sass/_variables';
 
 #todo-page {
   display: grid;
@@ -26,3 +26,4 @@
     padding: 11px 5px;
   }
 }
+

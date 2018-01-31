@@ -1,18 +1,18 @@
-'use strict';
+'use strict'
 
-const path = require('path');
-const webpack = require('webpack');
-const paths = require('./paths');
+//const path = require('path')
+const webpack = require('webpack')
+const paths = require('./paths')
 
 // Plugins
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 // Load dotenv
 //https://github.com/motdotla/dotenv
-require('dotenv').config({ path: './config/.env.dev' });
+require('dotenv').config({ path: './config/.env.dev' })
 
 module.exports = {
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'cheap-module-source-map',
   module: {
     rules: [
       // Process JS with Babel
@@ -24,7 +24,7 @@ module.exports = {
           // This is a feature of `babel-loader` for webpack (not Babel itself).
           // It enables caching results in ./node_modules/.cache/babel-loader/
           // directory for faster rebuilds.
-          cacheDirectory: true,
+          cacheDirectory: true
         }
       },
       // "postcss" loader applies autoprefixer to our CSS.
@@ -38,7 +38,7 @@ module.exports = {
           { loader: 'style-loader', options: { sourceMap: true } },
           {
             loader: 'css-loader',
-            options: { importLoaders: 1, sourceMap: true },
+            options: { importLoaders: 1, sourceMap: true }
           },
           { loader: 'sass-loader', options: { sourceMap: true } },
           { loader: 'postcss-loader', options: { config: { path: paths.configPostCSS } } }
@@ -73,4 +73,4 @@ module.exports = {
     port: 9000
     //quiet: true // necessary for FriendlyErrorsPlugin
   }
-};
+}

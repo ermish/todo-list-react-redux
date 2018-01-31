@@ -1,19 +1,20 @@
 export function uuid() {
-  var chars = '0123456789abcdef'.split('')
+  const chars = '0123456789abcdef'.split('')
 
-  var uuid = [],
-    rnd = Math.random,
-    r
-  uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-'
-  uuid[14] = '4' // version 4
+  const newUuid = []
+  const rnd = Math.random
+  let r = 0
 
-  for (var i = 0; i < 36; i++) {
-    if (!uuid[i]) {
+  newUuid[8] = newUuid[13] = newUuid[18] = newUuid[23] = '-'
+  newUuid[14] = '4' // version 4
+
+  for (let i = 0; i < 36; i++) {
+    if (!newUuid[i]) {
       r = 0 | (rnd() * 16)
 
-      uuid[i] = chars[i == 19 ? (r & 0x3) | 0x8 : r & 0xf]
+      newUuid[i] = chars[i == 19 ? (r & 0x3) | 0x8 : r & 0xf]
     }
   }
 
-  return uuid.join('')
+  return newUuid.join('')
 }
